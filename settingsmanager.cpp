@@ -93,6 +93,7 @@ void SettingsManager::loadTranslations(QString languageName) {
                    << "musicids.txt"
                    << "spritecategories.xml"
                    << "spritedata.xml"
+                   << "spritedata_custom.xml"
                    << "tilebehaviors.xml"
                    << "tilesetnames.txt";
 

@@ -587,7 +587,6 @@ void LevelEditorWindow::updateEditors()
     pathEditor->updateEditor();
     progPathEditor->updateEditor();
     spriteEditor->spriteIdsPtr()->updateEditor();
-//    spriteEditor->spriteDataEditorPtr()->updateEditor();
 }
 
 bool LevelEditorWindow::editorsLoaded()

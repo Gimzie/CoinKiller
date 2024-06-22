@@ -48,6 +48,7 @@ public:
     QString getNotes() const { return notes; }
     Field* getFieldPtr(int id) { return &fields[id]; }
     int getFieldCount() const { return fields.size(); }
+    void doOverride(const SpriteDefinition& other);
 
 private:
     QString name;
@@ -88,6 +89,8 @@ public:
 private:
     QList<spriteView> spriteViews;
     QHash<int, SpriteDefinition> spriteDefs;
+
+    bool customSprites = false;
 
     QString spriteDataVersion;
 };

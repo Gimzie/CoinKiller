@@ -12,21 +12,49 @@ void SpriteData::loadSpriteDefs()
     spriteDefs.clear();
 
     QDomDocument xmlSpriteData;
-    QFile f(SettingsManager::getInstance()->getFilePath("spritedata.xml"));
-    if (!f.open(QIODevice::ReadOnly))
+    QFile f1(SettingsManager::getInstance()->getFilePath("spritedata.xml"));
+    if (!f1.open(QIODevice::ReadOnly))
         return;
-    xmlSpriteData.setContent(&f);
-    f.close();
+    xmlSpriteData.setContent(&f1);
+    f1.close();
 
     spriteDataVersion =  xmlSpriteData.documentElement().attribute("version", "1.0");
 
     QDomElement spriteElement = xmlSpriteData.documentElement().firstChild().toElement();
+
     while (!spriteElement.isNull())
     {
         SpriteDefinition def(spriteElement);
         spriteDefs.insert(def.getID(), def);
 
         spriteElement = spriteElement.nextSiblingElement();
+    }
+
+    // Load Custom Sprite Definitions
+    QDomDocument xmlSpriteDataCustom;
+    QFile f2(SettingsManager::getInstance()->getFilePath("spritedata_custom.xml"));
+    if (f2.open(QIODevice::ReadOnly))
+    {
+        xmlSpriteDataCustom.setContent(&f2);
+
+        QDomElement spriteElementCustom = xmlSpriteDataCustom.documentElement().firstChild().toElement();
+        while (!spriteElementCustom.isNull())
+        {
+            SpriteDefinition def(spriteElementCustom);
+            int id = def.getID();
+
+            if (spriteDefs.contains(id))
+                getSpriteDef(id).doOverride(def);
+            else
+                spriteDefs.insert(id, def);
+
+            spriteElementCustom = spriteElementCustom.nextSiblingElement();
+        }
+
+        f1.close();
+        f2.close();
+
+        customSprites = true;
     }
 }
 
@@ -35,11 +63,11 @@ void SpriteData::loadSpriteViews()
     spriteViews.clear();
 
     QDomDocument xmlSpriteViews;
-    QFile f2(SettingsManager::getInstance()->getFilePath("spritecategories.xml"));
-    if (!f2.open(QIODevice::ReadOnly))
+    QFile f3(SettingsManager::getInstance()->getFilePath("spritecategories.xml"));
+    if (!f3.open(QIODevice::ReadOnly))
         return;
-    xmlSpriteViews.setContent(&f2);
-    f2.close();
+    xmlSpriteViews.setContent(&f3);
+    f3.close();
 
     // Add "All (Sorted by Number)" View
     spriteView allView;
@@ -189,5 +217,40 @@ SpriteDefinition::SpriteDefinition(QDomElement spriteElement)
         fields.append(field);
 
         fieldElement = fieldElement.nextSibling().toElement();
+    }
+}
+
+void SpriteDefinition::doOverride(const SpriteDefinition& other)
+{
+    if (other.id != id)
+        return;
+
+    if (!other.name.isEmpty())
+        name = other.name;
+
+    if (!other.notes.isEmpty())
+        notes = other.notes;
+
+    QSet<int> copied;
+
+    for (int i = 0; i < other.fields.size(); i++)
+    {
+        for (int j = 0; j < fields.size(); j++)
+        {
+            if (fields[j].title == other.fields[i].title)
+            {
+                fields[j] = other.fields[i];
+                copied.insert(i);
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < other.fields.size(); i++)
+    {
+        if (copied.contains(i))
+            continue;
+
+        fields.append(other.fields[i]);
     }
 }

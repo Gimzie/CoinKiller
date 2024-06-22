@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<sprites version="2.0">
+  <sprite id="37" name="Skewer - Up" notes="Actor: 0x19A&#13;&#10;Description: A Skewer that moves up.&#13;&#10;Event Triggerable: No&#13;&#10;Affected by Gold Ring: No &#13;&#10;Requirements: N/A">
+    <list pos="4" pos_type="nybbles" title="Movement Speed" comment="Controls movement speed. ">
+      <entry value="0">Fast</entry>
+      <entry value="1">Faster, but return time is as fast</entry>
+      <entry value="2">Medium</entry>
+      <entry value="3">Slow</entry>
+    </list>
+    <list pos="5" pos_type="nybbles" title="Timing Type">
+      <entry value="0">Synced</entry>
+      <entry value="1">Not Synced</entry>
+      <entry value="2">Start Launched (Not Synced)</entry>
+      <entry value="8">Delayed Start (Synced)</entry>
+      <entry value="9">Delayed Start (Not Synced)</entry>
+      <entry value="10">Delayed Start (Start Launched)</entry>
+    </list>
+    <list pos="6" pos_type="nybbles" title="Distance" comment="Controls launch distance.">
+      <entry value="0">16 Tiles</entry>
+      <entry value="1">7 Tiles</entry>
+      <entry value="2">14 Tiles</entry>
+      <entry value="3">10 Tiles</entry>
+    </list>
+    <checkbox pos="7" pos_type="nybbles" title="Z-Order Change" comment="When checked, the skewer will appear behind certain sprites."/>
+    <value pos="8-9" pos_type="nybbles" title="Launch Delay" comment="The time it stays before launching."/>
+    <value pos="10-11" pos_type="nybbles" title="Return Delay" comment="The time it stays launched."/>
+  </sprite>
+  <sprite id="131" name="Skewer - Down" notes="Actor: 0x19A&#13;&#10;Description: A Skewer that moves down.&#13;&#10;Event Triggerable: No&#13;&#10;Affected by Gold Ring: No &#13;&#10;Requirements: N/A">
+    <list pos="4" pos_type="nybbles" title="Movement Speed" comment="Controls movement speed. ">
+      <entry value="0">Fast</entry>
+      <entry value="1">Faster, but return time is as fast</entry>
+      <entry value="2">Medium</entry>
+      <entry value="3">Slow</entry>
+    </list>
+    <list pos="5" pos_type="nybbles" title="Timing Type">
+      <entry value="0">Synced</entry>
+      <entry value="1">Not Synced</entry>
+      <entry value="2">Start Launched (Not Synced)</entry>
+      <entry value="8">Delayed Start (Synced)</entry>
+      <entry value="9">Delayed Start (Not Synced)</entry>
+      <entry value="10">Delayed Start (Start Launched)</entry>
+    </list>
+    <list pos="6" pos_type="nybbles" title="Distance" comment="Controls launch distance.">
+      <entry value="0">16 Tiles</entry>
+      <entry value="1">7 Tiles</entry>
+      <entry value="2">14 Tiles</entry>
+      <entry value="3">10 Tiles</entry>
+    </list>
+    <checkbox pos="7" pos_type="nybbles" title="Z-Order Change" comment="When checked, the skewer will appear behind certain sprites."/>
+    <value pos="8-9" pos_type="nybbles" title="Launch Delay" comment="The time it stays before launching."/>
+    <value pos="10-11" pos_type="nybbles" title="Return Delay" comment="The time it stays launched."/>
+  </sprite>
+</sprites>
