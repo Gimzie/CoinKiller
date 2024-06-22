@@ -425,6 +425,12 @@ void Sprite::setRect()
             renderOffsetX = 274;
         }
         break;
+    case 37: // Skewer Up
+        width = 82;
+        height = 557;
+        renderOffsetH = 320;
+        renderOffsetY = -320;
+        break;
     case 38: // Reznor Wheel
         if(getNybble(8) == 1)
         {
@@ -1202,9 +1208,11 @@ void Sprite::setRect()
         offsetx = -55;
         offsety = -85;
         break;
-    case 131: // Bowser Block
-            width = getNybble(11)*20 >= 20 ? getNybble(11)*20 : 120;
-            height = getNybble(10)*20 >= 20 ? getNybble(10)*20 : 20;
+    case 131: // Skewer Down
+        width = 82;
+        height = 557;
+        offsety = -537;
+        renderOffsetH = 320;
         break;
     case 132: // Bowser Battle Switch Controller
         width = 53;
