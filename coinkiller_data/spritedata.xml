@@ -2024,7 +2024,7 @@
     <value pos="17" pos_type="nybbles" title="Width" comment="The width of the platform. Setting it to 0 makes the platform 4 tiles. No other value adds 4 tiles to the width."/>
     <checkbox pos="18" pos_type="nybbles" title="Player Maintains Momentum" comment="Allows Mario to maintain the momentum of the platform when jumping"/>
   </sprite>
-  <sprite id="147" name="Spinning Tri-Platform" notes="A rickshaw lift that can be moved by the player.">
+  <sprite id="147" name="Spinning Water Wheel Tri-Platform" notes="A rickshaw lift that can be moved by the player.">
     <checkbox pos="5" pos_type="nybbles" title="Faster Rotation" comment="When checked the platform will rotate faster. [Unused]"/>
     <checkbox pos="7" pos_type="nybbles" title="Spins Clockwise"/>
     <list pos="11" pos_type="nybbles" title="Size">
@@ -2135,7 +2135,7 @@
     <checkbox pos="11" pos_type="nybbles" title="Only Spawn While in View"/>
     <value pos="17" pos_type="nybbles" title="Width"/>
   </sprite>
-  <sprite id="154" name="Paddle Platform" notes="Can move with and without tracks.&#13;&#10;Can be big or small.">
+  <sprite id="154" name="Water Wheel Platform" notes="Can move with and without tracks.&#13;&#10;Can be big or small.">
     <value pos="0-1" pos_type="nybbles" title="Triggering Event ID" comment="The platform will appear when triggered. [Unused]"/>
     <checkbox pos="4" pos_type="nybbles" title="Event Triggered" comment="Allows the platform to be triggered by events. [Unused]"/>
     <checkbox pos="5" pos_type="nybbles" title="Slower Rotation" comment="When Checked, the platform's rotation speed will be slower. [Unused]"/>
@@ -2930,7 +2930,7 @@
     <checkbox pos="10" pos_type="nybbles" title="Spawn Deep Cheeps" comment="When checked, deep cheeps will be spawned instead."/>
     <checkbox pos="11" pos_type="nybbles" title="Spawn on Player Height" comment="When checked, cheep cheeps will only spawn on the vertical position of the player. When unchecked, they can spawn anywhere on the screen."/>
   </sprite>
-  <sprite id="202" name="Camera Limit - Path">
+  <sprite id="202" name="Camera Limit - Path" notes="The path used by the limit cannot contain more than 64 path nodes.">
     <list pos="4" pos_type="nybbles" title="Limit Direction">
       <entry value="0">Camera Stays Above</entry>
       <entry value="1">Camera Stays Below</entry>
@@ -3126,7 +3126,7 @@
       <entry value="15">17</entry>
     </list>
   </sprite>
-  <sprite id="214" name="Camera Controller - Scroll View" notes="Used to shift camera relative to Mario?">
+  <sprite id="214" name="Camera Controller - Scroll View" notes="Offsets the camera relative to the player.&#13;&#10;&#13;&#10;A maximum of 20 Scroll Views can be used per area.">
     <list pos="4" pos_type="nybbles" title="Direction" comment="If set to any value above 7, the controller will no longer work. [Unused]">
       <entry value="0">Right</entry>
       <entry value="1">Left</entry>

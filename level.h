@@ -45,7 +45,7 @@ public:
     quint8 unk2;
     quint16 coinRushTimeLimit;
 
-    QList<BgdatObject*> objects[2];
+    QList<BgdatObject*> objects[3];
     QList<Sprite*> sprites;
     QList<Entrance*> entrances;
     QList<Location*> locations;

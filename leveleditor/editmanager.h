@@ -6,6 +6,7 @@
 
 #include <QList>
 #include <QKeyEvent>
+
 #include <QUndoStack>
 
 class EditManager : public QObject
@@ -128,7 +129,7 @@ private:
 
     int selTileset = -1;
     int selObject = -1;
-    int selLayer = 0;
+    int selLayer = 1;
     int selSprite = -1;
 
     QList<Object*> getObjectsAtPos(int x1, int y1, int x2, int y2, bool firstOnly, QRect drawrect);

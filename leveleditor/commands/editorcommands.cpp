@@ -10,6 +10,9 @@ SetLayerMask::SetLayerMask(quint8 *layerMask, LAYER_MASK layer, bool state) :
     QString enabledStr = (state) ? "Enabled" : "Disabled";
 
     switch (layer) {
+    case LAYER_MASK::LAYER_ZERO:
+        this->setText(QObject::tr("%1 Layer 0").arg(enabledStr));
+        break;
     case LAYER_MASK::LAYER_ONE:
         this->setText(QObject::tr("%1 Layer 1").arg(enabledStr));
         break;

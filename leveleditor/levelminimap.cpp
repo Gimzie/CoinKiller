@@ -24,11 +24,14 @@ void LevelMiniMap::paintEvent(QPaintEvent* evt)
 
     painter.fillRect(drawrect, QColor(119,136,153));
 
-    foreach (BgdatObject* obj, level->objects[1])
+    foreach (BgdatObject* obj, level->objects[2])
         painter.fillRect(QRect(obj->getx(), obj->gety(), obj->getwidth(), obj->getheight()), QColor(200,200,200));
 
-    foreach (BgdatObject* obj, level->objects[0])
+    foreach (BgdatObject* obj, level->objects[1])
         painter.fillRect(QRect(obj->getx(), obj->gety(), obj->getwidth(), obj->getheight()), Qt::white);
+
+    foreach (BgdatObject* obj, level->objects[0])
+        painter.fillRect(QRect(obj->getx(), obj->gety(), obj->getwidth(), obj->getheight()), QColor(200,225,255));
 
     foreach (Location* loc, level->locations)
     {

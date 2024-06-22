@@ -26,13 +26,22 @@ TilesetPalette::TilesetPalette(Level* level, EditManager* editManager, Game* gam
     label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     topLayout->addWidget(label);
 
+    layerButtons = new QButtonGroup(this);
+
+    QRadioButton* layer0RadioBtn = new QRadioButton(tr("Layer 0"));
+    layer0RadioBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    layerButtons->addButton(layer0RadioBtn, 0);
+    topLayout->addWidget(layer0RadioBtn);
+
     QRadioButton* layer1RadioBtn = new QRadioButton(tr("Layer 1"));
     layer1RadioBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     layer1RadioBtn->setChecked(true);
+    layerButtons->addButton(layer1RadioBtn, 1);
     topLayout->addWidget(layer1RadioBtn);
 
     QRadioButton* layer2RadioBtn = new QRadioButton(tr("Layer 2"));
     layer2RadioBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    layerButtons->addButton(layer2RadioBtn, 2);
     topLayout->addWidget(layer2RadioBtn);
 
     topLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Preferred));
@@ -109,7 +118,7 @@ TilesetPalette::TilesetPalette(Level* level, EditManager* editManager, Game* gam
         connect(objectLists[tsSlot], &QListView::entered, this, &TilesetPalette::objectsListViewClicked);
     }
 
-    connect(layer1RadioBtn, &QRadioButton::toggled, this, &TilesetPalette::layerToggled);
+    connect(layerButtons, &QButtonGroup::idToggled, this, &TilesetPalette::layerToggled);
 
 }
 
@@ -160,7 +169,7 @@ void TilesetPalette::loadTileset(int tilesetNbr)
         QStandardItemModel* objectsModel = dynamic_cast<QStandardItemModel*>(objectLists[tilesetNbr]->model());
         if (objectsModel == nullptr)
         {
-           objectsModel = new QStandardItemModel(this);
+            objectsModel = new QStandardItemModel(this);
         }
         objectsModel->clear();
         objectLists[tilesetNbr]->setModel(objectsModel);
@@ -218,9 +227,11 @@ void TilesetPalette::updatePalettes(int actualPal)
     }
 }
 
-void TilesetPalette::layerToggled(bool checked)
+void TilesetPalette::layerToggled(int id, bool checked)
 {
-    editManager->setLayer(!checked);
+    if (checked) {
+        editManager->setLayer(id);
+    }
 }
 
 void TilesetPalette::select(BgdatObject *obj)

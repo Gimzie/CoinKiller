@@ -10,6 +10,7 @@
 #include <QTabWidget>
 #include <QComboBox>
 #include <QUndoStack>
+#include <QButtonGroup>
 
 class TilesetPalette : public QWidget
 {
@@ -21,7 +22,7 @@ public:
 
 private slots:
     void objectsListViewClicked(const QModelIndex &index);
-    void layerToggled(bool state);
+    void layerToggled(int id, bool state);
     void tilesetPickerChosen(int index);
 
 private:
@@ -33,6 +34,7 @@ private:
     QTabWidget *tabWidget;
     QList<QComboBox*> tilesetPickers;
     QList<QListView*> objectLists;
+    QButtonGroup *layerButtons;
 
     void loadTileset(int tilesetNbr);
     void updatePalettes(int actualPal);

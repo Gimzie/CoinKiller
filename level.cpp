@@ -290,9 +290,9 @@ Level::Level(Game *game, SarcFilesystem* archive, int area, QString lvlName)
 
     // read bgdat
     QString bgdatfiletemp = QString("/course/course%1_bgdatL%2.bin").arg(area);
-    for (int l = 0; l < 2; l++)
+    for (int l = 0; l < 3; l++)
     {
-        QString bgdatfile = bgdatfiletemp.arg(l+1);
+        QString bgdatfile = bgdatfiletemp.arg(l);
         if (!archive->fileExists(bgdatfile)) continue;
 
         FileBase* bgdat = archive->openFile(bgdatfile);
@@ -386,9 +386,9 @@ qint8 Level::save()
 
     // Save BGDat
     QString bgdatfiletemp = QString("/course/course%1_bgdatL%2.bin").arg(area);
-    for (int l = 0; l < 2; l++)
+    for (int l = 0; l < 3; l++)
     {
-        QString bgdatfile = bgdatfiletemp.arg(l+1);
+        QString bgdatfile = bgdatfiletemp.arg(l);
 
         if (objects[l].length() == 0)
         {
@@ -867,7 +867,7 @@ void Level::raiseLayer(BgdatObject *obj)
 {
     int currLayer = obj->getLayer();
 
-    if (currLayer < 1)
+    if (currLayer <= 0)
         return;
 
     objects[currLayer].removeOne(obj);
@@ -879,7 +879,7 @@ void Level::lowerLayer(BgdatObject *obj)
 {
     int currLayer = obj->getLayer();
 
-    if (currLayer > 0)
+    if (currLayer >= 2)
         return;
 
     objects[currLayer].removeOne(obj);

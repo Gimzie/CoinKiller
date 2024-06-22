@@ -82,6 +82,9 @@ LevelEditorWindow::LevelEditorWindow(LevelManager* lvlMgr, int initialArea) :
 
     connect(ui->actionShowPreferences, &QAction::triggered, this, &LevelEditorWindow::showPreferencesDialog);
 
+    ui->actionToggleLayer0->setIcon(QIcon(basePath + "layer0.png"));
+    connect(ui->actionToggleLayer0, &QAction::toggled, this, &LevelEditorWindow::toggleLayer);
+
     ui->actionToggleLayer1->setIcon(QIcon(basePath + "layer1.png"));
     connect(ui->actionToggleLayer1, &QAction::toggled, this, &LevelEditorWindow::toggleLayer);
 
@@ -239,6 +242,10 @@ void LevelEditorWindow::historyStateChanged(int index)
 
     // Update button states
 
+    ui->actionToggleLayer0->blockSignals(true);
+    ui->actionToggleLayer0->setChecked(levelView->editManagerPtr()->getLayerMask() & LAYER_MASK::LAYER_ZERO);
+    ui->actionToggleLayer0->blockSignals(false);
+
     ui->actionToggleLayer1->blockSignals(true);
     ui->actionToggleLayer1->setChecked(levelView->editManagerPtr()->getLayerMask() & LAYER_MASK::LAYER_ONE);
     ui->actionToggleLayer1->blockSignals(false);
@@ -275,7 +282,11 @@ void LevelEditorWindow::toggleLayer(bool toggle)
     LAYER_MASK mask = LAYER_MASK::NONE;
 
     QAction *action = qobject_cast<QAction*>(sender());
-    if (action == ui->actionToggleLayer1)
+    if (action == ui->actionToggleLayer0)
+    {
+        mask = LAYER_MASK::LAYER_ZERO;
+    }
+    else if (action == ui->actionToggleLayer1)
     {
         mask = LAYER_MASK::LAYER_ONE;
     }
@@ -739,6 +750,7 @@ void LevelEditorWindow::loadArea(int id, bool closeLevel, bool init)
     levelView->setMaximumSize(4096*20, 4096*20);
 
     levelView->editManagerPtr()->setLayerMask(LAYER_MASK::ALL, true);
+    ui->actionToggleLayer0->setChecked(true);
     ui->actionToggleLayer1->setChecked(true);
     ui->actionToggleLayer2->setChecked(true);
     ui->actionToggleSprites->setChecked(true);

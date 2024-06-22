@@ -165,7 +165,7 @@ void LevelView::paint(QPainter& painter, QRect rect, float zoomLvl, bool selecti
     }
 
     // Render Tiles
-    for (int l = 1; l >= 0; l--)
+    for (int l = 2; l >= 0; l--)
     {
         if (!(editManager->getLayerMask() & (1<<l)))
             continue;

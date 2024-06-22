@@ -30,7 +30,7 @@
 SettingsManager* SettingsManager::instance = nullptr;
 
 SettingsManager* SettingsManager::init(QWidget* parentWidget) {
-    QCoreApplication::setOrganizationName("Blarg City");
+    QCoreApplication::setOrganizationName("Gimzie");
     QCoreApplication::setApplicationName("CoinKiller");
 
     if (instance != nullptr) {

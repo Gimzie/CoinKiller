@@ -580,7 +580,7 @@ QList<Object*> EditManager::getObjectsAtPos(int x1, int y1, int x2, int y2, bool
 
     QRect area = QRect(QPoint(x1, y1), QPoint(x2, y2));
 
-    for (int l = 1; l >= 0; l--)
+    for (int l = 2; l >= 0; l--)
     {
         if (!(layerMask & (1 << l)))
             continue;
@@ -857,7 +857,7 @@ void EditManager::sortSelection()
 {
     QList<Object*> sortedObjects;
 
-    for (int i=0; i<2; i++) foreach (BgdatObject* bgdat, level->objects[i]) if (selectedObjects.contains(bgdat)) sortedObjects.append(bgdat);
+    for (int i=0; i<3; i++) foreach (BgdatObject* bgdat, level->objects[i]) if (selectedObjects.contains(bgdat)) sortedObjects.append(bgdat);
     foreach (Sprite* spr, level->sprites) if (selectedObjects.contains(spr)) sortedObjects.append(spr);
     foreach (Entrance* entr, level->entrances) if (selectedObjects.contains(entr)) sortedObjects.append(entr);
     foreach (Location* loc, level->locations) if (selectedObjects.contains(loc)) sortedObjects.append(loc);
@@ -876,7 +876,7 @@ void EditManager::selectAll()
 {
     selectedObjects.clear();
 
-    for (int i=0; i<2; i++) foreach (BgdatObject* bgdat, level->objects[i]) selectedObjects.append(bgdat);
+    for (int i=0; i<3; i++) foreach (BgdatObject* bgdat, level->objects[i]) selectedObjects.append(bgdat);
     foreach (Sprite* spr, level->sprites) selectedObjects.append(spr);
     foreach (Entrance* entr, level->entrances) selectedObjects.append(entr);
     foreach (Location* loc, level->locations) selectedObjects.append(loc);

@@ -73,6 +73,7 @@ int LevelManager::addArea(int id)
     for (int i = getAreaCount(); i >= newAreaId; i--)
     {
         archive->renameFile(QString("course/course%1.bin").arg(i), QString("course%1.bin").arg(i+1));
+        archive->renameFile(QString("course/course%1_bgdatL0.bin").arg(i), QString("course%1_bgdatL0.bin").arg(i+1));
         archive->renameFile(QString("course/course%1_bgdatL1.bin").arg(i), QString("course%1_bgdatL1.bin").arg(i+1));
         archive->renameFile(QString("course/course%1_bgdatL2.bin").arg(i), QString("course%1_bgdatL2.bin").arg(i+1));
 
@@ -114,12 +115,14 @@ int LevelManager::removeArea(Level *level)
     int oldAreaCount = getAreaCount();
 
     archive->deleteFile(QString("course/course%1.bin").arg(areaId));
+    archive->deleteFile(QString("course/course%1_bgdatL0.bin").arg(areaId));
     archive->deleteFile(QString("course/course%1_bgdatL1.bin").arg(areaId));
     archive->deleteFile(QString("course/course%1_bgdatL2.bin").arg(areaId));
 
     for (int i = areaId+1; i <= oldAreaCount; i++)
     {
         archive->renameFile(QString("course/course%1.bin").arg(i), QString("course%1.bin").arg(i-1));
+        archive->renameFile(QString("course/course%1_bgdatL0.bin").arg(i), QString("course%1_bgdatL0.bin").arg(i-1));
         archive->renameFile(QString("course/course%1_bgdatL1.bin").arg(i), QString("course%1_bgdatL1.bin").arg(i-1));
         archive->renameFile(QString("course/course%1_bgdatL2.bin").arg(i), QString("course%1_bgdatL2.bin").arg(i-1));
 
