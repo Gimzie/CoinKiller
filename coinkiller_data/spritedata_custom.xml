@@ -50,4 +50,7 @@
     <value pos="8-9" pos_type="nybbles" title="Launch Delay" comment="The time it stays before launching."/>
     <value pos="10-11" pos_type="nybbles" title="Return Delay" comment="The time it stays launched."/>
   </sprite>
+  <sprite id="280" name="+ Clock">
+    <checkbox pos="9" pos_type="nybbles" title="Spawns outside Coin Rush"/>
+  </sprite>
 </sprites>

@@ -105,15 +105,13 @@
       <entry value="3">Super Star</entry>
       <entry value="4">Fire Flower and Gold Flower</entry>
     </list>
-    <list pos="7" pos_type="nybbles" title="Object to Spawn" comment="If Movement = Walks, this object appears when the Whomp is KO'd. If Movement = Still, it is appeared when the Whomp is down. Star Coin is Unused.">
+    <list pos="7" pos_type="nybbles" title="Object to Spawn" comment="If Movement = Walks, this object appears when the Whomp is KO'd. If Movement = Still, it is appeared when the Whomp is down. Star Coin is unused. Values 6+ go out of bounds and produce undefined behavior.">
       <entry value="0">Nothing</entry>
       <entry value="1">Roulette Block</entry>
       <entry value="2">Star Coin</entry>
       <entry value="3">Red Coin Ring</entry>
       <entry value="4">Coins</entry>
       <entry value="5">Moon Coin</entry>
-      <entry value="6">ScCourse 0x0010 (Crash)</entry>
-      <entry value="7">BsRoot? 0x0000 (smoke)</entry>
     </list>
     <value pos="8" pos_type="nybbles" title="Patrol Range" comment="Determines how far the whomp will walk. Value 0 produces a patrol range of one block on each side, but the Whomp will ignore the range after being angered once. Non-default values behave as expected."/>
     <list pos="9" pos_type="nybbles" title="Direction" comment="Determines the direction the whomp will face when spawned.">
@@ -1114,7 +1112,7 @@
     <checkbox pos="6" pos_type="nybbles" title="Ledge Under Door" comment="Adds a small ledge under the door when set to 1. This is only a visual change."/>
     <checkbox pos="7" pos_type="nybbles" title="Fake Door"/>
   </sprite>
-  <sprite id="74" name="Door - Ghost House - Flag-triggered" notes="A door that is triggered by an event.">
+  <sprite id="74" name="Door - Ghost House - Event-triggered" notes="A door that is triggered by an event.">
     <value pos="0-1" pos_type="nybbles" title="Triggering Event ID"/>
     <checkbox pos="7" pos_type="nybbles" title="Fake Door"/>
   </sprite>
@@ -1334,7 +1332,7 @@
     </list>
   </sprite>
   <sprite id="89" name="Porcupuffer" notes="Actor: 0x116">
-    <checkbox pos="6" pos_type="nybbles" title="Never comes back" comment="Used only once, and simply a visual detail used at the beginning of a level. :c"/>
+    <checkbox pos="6" pos_type="nybbles" title="Never comes back" comment="Used only once, and simply a visual detail used at the beginning of a level."/>
   </sprite>
   <sprite id="90" name="Porcupuffer Spawn Area" notes="Actor: 0x134">
     <value pos="8-9" pos_type="nybbles" title="Respawn Time (Seconds)" comment="Time it takes before a new porcupuffer spawns, in seconds."/>
@@ -1593,7 +1591,7 @@
   </sprite>
   <sprite id="102" name="Iggy Koopa"/>
   <sprite id="103" name="Toad House Controller" notes="Causes the level to be exited once all items have been collected."/>
-  <sprite id="104" name="Lakitu's Cloud" notes="Only seems to be used in retail in the early beta levels with mismatched sprite numbers.">
+  <sprite id="104" name="Lakitu" notes="Only seems to be used in retail in the early beta levels with mismatched sprite numbers.">
     <value pos="4" pos_type="nybbles" title="Time Between Throws" comment="Determines the amount of time between each spiny thown. Higher values = longer time. [Unused]"/>
     <checkbox pos="5" pos_type="nybbles" title="Slower Movement" mask="2" comment="If enabled, the Lakitu will move slower. [Unused]"/>
     <value pos="8" pos_type="nybbles" title="Spiny Limit" comment="The Lakitu will only throw spinies if there is less than this ammount on screen. 0 = 4 Spinies. [Unused]"/>
@@ -2089,7 +2087,7 @@
     <value pos="9" pos_type="nybbles" title="Left side rope height"/>
     <value pos="10" pos_type="nybbles" title="Right side rope height"/>
     <value pos="11" pos_type="nybbles" title="Distance between steps"/>
-    <checkbox pos="16" pos_type="nybbles" title="Heavier Platforms" comment="hen set to 1, the platform will fall much faster when stepping on it."/>
+    <checkbox pos="16" pos_type="nybbles" title="Heavier Platforms" comment="When set to 1, the platform will fall much faster when stepping on it."/>
     <value pos="17" pos_type="nybbles" title="Length of steps"/>
   </sprite>
   <sprite id="152" name="Path-controlled Lift - with Peepa" notes="Uses the Path Node &quot;Variable Use&quot; field to determine how rotation acts, a value of 0 will cause the platform to wobble, a value of 1 will cause the platform to be at a fixed rotation.">
@@ -3208,7 +3206,7 @@
     </list>
     <checkbox pos="15" pos_type="nybbles" title="Ice Snakeblock" comment=" If checked, the snakeblock will be an ice snakeblock. [Unused]"/>
   </sprite>
-  <sprite id="218" name="Synchronized Snake Block (Uses GroupID)" notes="Actor: 0x05a">
+  <sprite id="218" name="Synchronized Snake Block" notes="Actor: 0x05a">
     <value pos="0-1" pos_type="nybbles" title="Target Event ID"/>
     <value pos="5" pos_type="nybbles" title="Group ID" comment="Use this ID to link it to a GroupID (98)"/>
     <list pos="6" pos_type="nybbles" title="Speed" comment="Values of 3 or greater are unused and have no effect.">
@@ -4516,7 +4514,7 @@
     <value pos="17" pos_type="nybbles" title="[Depricated] Width" comment="Does nothing, presumably would have set the lift width at some point."/>
     <value pos="19" pos_type="nybbles" title="[Depricated] Height" comment="Does nothing, presumably would have set the lift height at some point."/>
   </sprite>
-  <sprite id="309" name="Resource Loader - Ghost House Stairs" notes="Must be placed to allow the ghost house stairs to fold and unfold.&#13;&#10;&#13;&#10;When placed this allows target events to activate the staircase tiles:&#13;&#10;Target event 2 to activate tileset objects 24 &amp; 30&#13;&#10;Target event 3 to activate tileset objects 25 &amp; 31&#13;&#10;Target event 4 to activate tileset objects 26 &amp; 32&#13;&#10;&#13;&#10;"/>
+  <sprite id="309" name="Resources Loader - Ghost House Stairs" notes="Must be placed to allow the ghost house stairs to fold and unfold.&#13;&#10;&#13;&#10;When placed this allows target events to activate the staircase tiles:&#13;&#10;Target event 2 to activate tileset objects 24 &amp; 30&#13;&#10;Target event 3 to activate tileset objects 25 &amp; 31&#13;&#10;Target event 4 to activate tileset objects 26 &amp; 32&#13;&#10;&#13;&#10;"/>
   <sprite id="310" name="Big Bowser Battle - Up-moving Lift ">
     <value pos="0-1" pos_type="nybbles" title="Triggering Event ID"/>
     <checkbox pos="9" pos_type="nybbles" title="Spawns without Lift Controller"/>
