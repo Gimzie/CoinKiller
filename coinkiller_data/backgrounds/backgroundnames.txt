@@ -1,6 +1,7 @@
 Kaigan:Beach
 Kaigan_Naname:Beach (Higher)
 Boss_Normal:Bossfight
+Boss_Buibui:Bossfight (Reznor)
 Boss_Iggy:Bossfight (Iggy)
 Boss_Lemmy:Bossfight (Lemmy)
 Boss_Ludwig:Bossfight (Ludwig)
