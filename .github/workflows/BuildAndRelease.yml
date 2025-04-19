@@ -159,20 +159,13 @@ jobs:
           sudo apt-get update
           sudo add-apt-repository universe
           sudo apt-get install -y qt6-base-dev libfuse2
-      
-      - name: Setup Qt
-        run: |
-          qtchooser -install qt6 $(which qmake6)
-          sudo mv ~/.config/qtchooser/qt6.conf /usr/share/qtchooser/qt6.conf
-          sudo mkdir -p /usr/lib/$(uname -p)-linux-gnu/qt-default/qtchooser
-          sudo ln -n /usr/share/qtchooser/qt6.conf /usr/lib/$(uname -p)-linux-gnu/qt-default/qtchooser/default.conf
 
       - name: Build
         working-directory: ${{ runner.temp }}
         run: |
           mkdir build
           cd build
-          qmake ${{ env.SOURCE_DIR }}/CoinKiller.pro CK_VERSION=${{ needs.setup-env.outputs.ck-version }}
+          qmake6 ${{ env.SOURCE_DIR }}/CoinKiller.pro CK_VERSION=${{ needs.setup-env.outputs.ck-version }}
           make -j$(nproc)
           make install INSTALL_ROOT=AppDir
 
