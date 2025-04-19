@@ -530,6 +530,7 @@ void MainWindow::setDarkMode(bool isDarkMode)
         QColor secondaryColor = QColor(25, 25, 25);
         QColor accentColor = QColor(42, 130, 218);
         QColor disabledColor = QColor(97, 97, 97);
+        QColor textBaseColor = QColor(74, 74, 74);
         QColor textColor = QColor(255, 255, 255);
 
         darkPalette.setColor(QPalette::Window, primaryColor);
@@ -538,7 +539,7 @@ void MainWindow::setDarkMode(bool isDarkMode)
         darkPalette.setColor(QPalette::Base, secondaryColor);
         darkPalette.setColor(QPalette::AlternateBase, primaryColor);
 
-        darkPalette.setColor(QPalette::ToolTipBase, textColor);
+        darkPalette.setColor(QPalette::ToolTipBase, textBaseColor);
         darkPalette.setColor(QPalette::ToolTipText, textColor);
 
         darkPalette.setColor(QPalette::PlaceholderText, Qt::lightGray);
@@ -559,11 +560,6 @@ void MainWindow::setDarkMode(bool isDarkMode)
         darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabledColor);
 
         qApp->setPalette(darkPalette);
-// TODO: Delete me
-//        QString darkStylesheet = QString("QToolTip { color: %1; background-color: %2; border: 1px solid %3; }").arg(
-//                                         textColor.name(), primaryColor.name(), textColor.name());
-
-//        qApp->setStyleSheet(darkStylesheet);
     }
     else
     {
