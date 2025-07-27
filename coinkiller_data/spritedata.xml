@@ -921,7 +921,7 @@
       <entry value="1">Sparkes With Smoke</entry>
       <entry value="2">Sparkles</entry>
     </list>
-    <value pos="19" pos_type="nybbles" title="Start Active" comment="If checked, the coin spawner will be triggered as soon as it is on screen."/>
+    <checkbox pos="19" pos_type="nybbles" title="Start Active" comment="If checked, the coin spawner will be triggered as soon as it is on screen."/>
   </sprite>
   <sprite id="58" name="Coin Spawner - Fountain" notes="Actor: 0x07D&#13;&#10;Description: A Sprite that spews coins.&#13;&#10;Event Triggerable: Yes&#13;&#10;Affected by Gold Ring: No &#13;&#10;Requirements: Must have A triggering ID set.">
     <value pos="0-1" pos_type="nybbles" title="Triggering Event ID" comment="The event that will cause the fountain to start."/>
@@ -947,14 +947,14 @@
     <checkbox pos="18" pos_type="nybbles" title="Start Invisible" mask="2" comment="If checked, the coin will stay invisible until the associated rotation controller is triggered."/>
     <value pos="20-21" pos_type="nybbles" title="Rotation ID"/>
   </sprite>
-  <sprite id="60" name="Movement-controlled Coin" notes="Actor: 0x0E2&#13;&#10;Description: A Coin that can be moved.&#13;&#10;Event Triggerable: No&#13;&#10;Affected by Gold Ring: No &#13;&#10;Requirements: Must have a Movement ID set.">
+  <sprite id="60" name="Movement-controlled Coin" notes="Can only be paired with &quot;Movement Controller Back and Forth (166)&quot;">
     <checkbox pos="8" pos_type="nybbles" title="Temporary Coin" comment="Causes the coin to despawn after a couple of seconds, similar to a coin dropped by an enemy. Is also offset up and to the left. [unused]"/>
     <list pos="9" pos_type="nybbles" title="Z-Order" comment="Determines the Z position of the coin. Values &gt; 2 are the same as 2.">
       <entry value="0">Above layer 1</entry>
       <entry value="1">Uncollectable Below layer 1</entry>
       <entry value="2">Below layer 1</entry>
     </list>
-    <value pos="20-21" pos_type="nybbles" title="Movement ID" comment="Used to pair the coin to a movement controller."/>
+    <value pos="20-21" pos_type="nybbles" title="Movement ID" comment="Used to pair the coin to a movement controller. (Only works with &quot;Movement Controller Back and Forth(166)&quot;)"/>
   </sprite>
   <sprite id="61" name="Red Coin" notes="Actor: 0x0D6&#13;&#10;Description: A Red Coin that is appears when a red coin ring triggers it.&#13;&#10;Event Triggerable: Yes&#13;&#10;Affected by Gold Ring: No &#13;&#10;Requirements: Must have A triggering ID set.">
     <list pos="16-18" pos_type="bits" title="Rotation Mode">
@@ -963,8 +963,10 @@
       <entry value="2">Coin Faces Screen (Broken)</entry>
       <entry value="4">Coin Faces Controller</entry>
     </list>
-    <checkbox pos="19" pos_type="bits" title="Use Rotation Controller Starting Rotation Offset" comment="If enabled, the red coin will use the start offset specified in the rotation controller."/>
     <value pos="0-1" pos_type="nybbles" title="Triggering Event ID" comment="What triggers the coin activating."/>
+    <checkbox pos="5" pos_type="nybbles" title="Use Rotation Controller Starting Rotation Offset" mask="8" comment="If enabled, the red coin will use the start offset specified in the rotation controller."/>
+    <checkbox pos="5" pos_type="nybbles" title="Unknown Rotation Option 1" comment="Only checked along with rotation movement."/>
+    <checkbox pos="5" pos_type="nybbles" title="Unknown Rotation Option 2" mask="4" comment="Only checked along with rotation movement."/>
     <list pos="7" pos_type="nybbles" title="Coin Type" comment="0 makes the coin normal, or makes it fall in a straight line. 1 and 2 make the coin into a paracoin, and both are at a different sync.">
       <entry value="0">Normal</entry>
       <entry value="1">Paracoin 1</entry>
@@ -976,14 +978,21 @@
       <entry value="2">Falling (Medium)</entry>
       <entry value="3">Falling (Fast)</entry>
       <entry value="4">Falling (Fastest)</entry>
-      <entry value="13">Gravity Affected</entry>
+      <entry value="10">Gravity Affected</entry>
+      <entry value="11">Gravity Affected (Medium)</entry>
+      <entry value="12">Gravity Affected (Fast)</entry>
+      <entry value="13">Gravity Affected (Faster)</entry>
+      <entry value="14">Gravity Affected (Fastest)</entry>
     </list>
     <list pos="9" pos_type="nybbles" title="Z-Order">
       <entry value="0">Above Layer 1</entry>
       <entry value="1">Above Layer 2</entry>
       <entry value="2">Further Above Layer 1</entry>
     </list>
-    <value pos="11" pos_type="nybbles" title="Red Coin ID" comment="This field is used to differentiate Red Coins when multiple Red Coin Rings are present  For example, if a Red Coin with a different ID is picked up, it will not count towards the same chain as the previous one, and will use the one associated with its ID."/>
+    <list pos="11" pos_type="nybbles" title="Red Coin Group" comment="This field is used to differentiate Red Coins when multiple Red Coin Rings are present  For example, if a Red Coin with a different ID is picked up, it will not count towards the same chain as the previous one, and will use the one associated with its ID.">
+      <entry value="0">Group A</entry>
+      <entry value="1">Group B</entry>
+    </list>
     <checkbox pos="18" pos_type="nybbles" title="Rotation-controlled" comment="Allows the red coin to be paired to a rotation controller, like the standard rotation-controlled coin. Does not support all functionality that the dedicated rotation-controlled variant does."/>
     <value pos="20-21" pos_type="nybbles" title="Rotation ID"/>
   </sprite>
@@ -1359,7 +1368,7 @@
       <entry value="3">Fastest</entry>
     </list>
     <checkbox pos="11" pos_type="nybbles" title="Move Left/Down"/>
-    <value pos="13" pos_type="nybbles" title="Location ID" comment="Won't despawn off-screen if the location is on-screen."/>
+    <value pos="12-13" pos_type="nybbles" title="Location ID" comment="Won't despawn off-screen if the location is on-screen."/>
   </sprite>
   <sprite id="93" name="Scuttlebug">
     <value pos="0-1" pos_type="nybbles" title="Triggering Event ID (Falling)" comment="The Scuttlebug will fall when event is activated if behaviour is set to 'Falling' and will retract when the event is disabled [Unused]"/>
@@ -2186,8 +2195,8 @@
     <value pos="10-11" pos_type="nybbles" title="Camera Y Offset" comment="Offsets the camera by N number of pixels."/>
   </sprite>
   <sprite id="158" name="Buzzy Beetle">
-    <value pos="4" pos_type="nybbles" title="Unknown Value 4"/>
-    <checkbox pos="5" pos_type="nybbles" title="Move Faster/Fall Instantly" comment="If the Buzzy Beetle is on the ground, this will make it move faster. If the Buzzy Beetle is on the ceiling, this will make it fall as soon as it is on screen."/>
+    <checkbox pos="4" pos_type="nybbles" title="Disable Culling" comment="If enabled, the Buzzy Beetle will not be culled out when off screen, allowing it to continue moving."/>
+    <checkbox pos="5" pos_type="nybbles" title="Ignore Tile Behaviors" comment="If checked, the Buzzy Beetle will ignore slopes and semisolids, as well as other tile behaviors. Also causes the Buzzy Beetle to fall slightly slower."/>
     <checkbox pos="6" pos_type="nybbles" title="Enable 1up Trick" comment="Makes it possible to use the infinite 1up trick with this buzzy beetle."/>
     <value pos="7" pos_type="nybbles" title="Unknown Value 7"/>
     <list pos="9" pos_type="nybbles" title="Direction" comment="Determines the direction the Buzzy Beetle will spawn facing. All other values are the same as 0.">
@@ -3080,21 +3089,21 @@
     </list>
     <list pos="5" pos_type="nybbles" title="Height" comment="Determines the height and direction of the rope.">
       <entry value="0">Flat</entry>
-      <entry value="1">Up One Tile</entry>
-      <entry value="2">Up Two Tiles</entry>
-      <entry value="3">Up Three Tiles</entry>
-      <entry value="4"> Up Four Tiles</entry>
-      <entry value="5">Up Five Tiles</entry>
-      <entry value="6">Up Six Tiles</entry>
-      <entry value="7">Up Seven Tiles</entry>
-      <entry value="8">Down Eight Tiles</entry>
-      <entry value="9">Down Seven Tiles</entry>
-      <entry value="10">Down Six Tiles</entry>
-      <entry value="11">Down Five Tiles</entry>
-      <entry value="12">Down Four Tiles</entry>
-      <entry value="13">Down Three Tiles</entry>
-      <entry value="14">Down Two Tiles</entry>
-      <entry value="15">Down One Tiles</entry>
+      <entry value="1">Up 1 Tile</entry>
+      <entry value="2">Up 2 Tiles</entry>
+      <entry value="3">Up 3 Tiles</entry>
+      <entry value="4">Up 4 Tiles</entry>
+      <entry value="5">Up 5 Tiles</entry>
+      <entry value="6">Up 6 Tiles</entry>
+      <entry value="7">Up 7 Tiles</entry>
+      <entry value="8">Down 8 Tiles</entry>
+      <entry value="9">Down 7 Tiles</entry>
+      <entry value="10">Down 6 Tiles</entry>
+      <entry value="11">Down 5 Tiles</entry>
+      <entry value="12">Down 4 Tiles</entry>
+      <entry value="13">Down 3 Tiles</entry>
+      <entry value="14">Down 2 Tiles</entry>
+      <entry value="15">Down 1 Tile</entry>
     </list>
     <checkbox pos="11" pos_type="nybbles" title="Hide left joint"/>
     <checkbox pos="11" pos_type="nybbles" title="Hide right joint" mask="2"/>
@@ -3196,7 +3205,8 @@
       <entry value="0">Stops</entry>
       <entry value="1">Jumps Right</entry>
       <entry value="2">Falls Down</entry>
-      <entry value="3">Falls (All at once) 4</entry>
+      <entry value="3">Falls (All at once)</entry>
+      <entry value="4">Changes Direction</entry>
       <entry value="5">Warp to First Node</entry>
     </list>
     <list pos="14" pos_type="nybbles" title="Activation Mode" comment="When set to Already Moving, the snakeblock will move without the player steping onto it.">
@@ -3238,7 +3248,8 @@
       <entry value="0">Stops</entry>
       <entry value="1">Jumps Right</entry>
       <entry value="2">Falls Down</entry>
-      <entry value="3">Falls (All at once) 4</entry>
+      <entry value="3">Falls (All at once)</entry>
+      <entry value="4">Changes Direction</entry>
       <entry value="5">Warp to First Node</entry>
     </list>
     <list pos="14" pos_type="nybbles" title="Activation Mode" comment="When set to Already Moving, the snakeblock will move without the player steping onto it.">
@@ -4281,8 +4292,13 @@
     <value pos="0-1" pos_type="nybbles" title="Triggering Event ID"/>
     <value pos="20-21" pos_type="nybbles" title="Movement ID" comment="Works with &quot;Movement Controller - Back and Forth&quot;."/>
   </sprite>
-  <sprite id="294" name="Warp Cannon" notes="Existing In-Game Sprite Data: Incomplete&#13;&#10;Possible settings:&#13;&#10;* Changes music.&#13;&#10;* Restricts scrolling">
-    <value pos="11" pos_type="nybbles" title="Unknown Value 11"/>
+  <sprite id="294" name="Warp Cannon">
+    <list pos="11" pos_type="nybbles" title="Countdown Timer Y Offset" comment="Offsets the Y Position of the countdown timer. (Offset is relative to the center of the screen. Timer is offset towards the top of the screen.)">
+      <entry value="0">36 pixels</entry>
+      <entry value="1">16 pixels</entry>
+      <entry value="2">56 pixels</entry>
+      <entry value="3">76 pixels</entry>
+    </list>
   </sprite>
   <sprite id="295" name="Resources Loader - Whomp"/>
   <sprite id="296" name="Toad">
@@ -4744,7 +4760,7 @@
       <entry value="3">Fastest</entry>
     </list>
     <checkbox pos="11" pos_type="nybbles" title="Move Left/Down"/>
-    <value pos="13" pos_type="nybbles" title="Location ID" comment="Won't despawn off-screen if the location is on-screen."/>
+    <value pos="12-13" pos_type="nybbles" title="Location ID" comment="Won't despawn off-screen if the location is on-screen."/>
   </sprite>
   <sprite id="323" name="Ending Birds" notes="Birds that are used for the ending."/>
   <sprite id="324" name="Invisible Tile Collider" notes="An invisible tile collider.&#13;&#10;&#13;&#10;This only exists so that you can't grab the bottom of the flagpole in 2-A.">
