@@ -3,6 +3,7 @@
 
 #include "filesystem/filesystem.h"
 
+#include <Etc1.h>
 #include <QImage>
 
 class Ctpk
@@ -14,10 +15,17 @@ public:
     QImage getTexture(quint32 entryIndex);
     QImage getTexture(QString filename);
 
-    // only supports replacing with exact same data size for now!
     void setTextureEtc1(quint32 entryIndex, QImage& img, bool alpha, uint quality = 1, bool dither = false);
 
+    void setTextureEtc1Region(quint32 entryIndex, QImage& img, QRect region, uint quality = 1, bool dither = false);
+
+    void rebuild();
+
+    void save();
+
     void setFilename(QString newName);
+
+    void setTextureSize(quint32 entryIndex, quint32 w, quint32 h);
 
 private:
     FileBase* file;
@@ -38,6 +46,15 @@ private:
         A4 = 11,
         ETC1 = 12,
         ETC1_A4 = 13
+    };
+
+    struct Layout
+    {
+        quint32 hashSectionOffset = 0;
+        quint32 infoSectionOffset = 0;
+        quint32 texSectionOffset = 0;
+        quint32 texSectionSize = 0;
+        quint32 totalSize = 0;
     };
 
     struct CtpkEntry
@@ -88,8 +105,18 @@ private:
         return val;
     }
 
+    static Etc1::Etc1PackParams makePackParams(uint quality, bool dither);
+    static void packEtc1Block16(const QImage& img, int blockX, int blockY,
+                                Etc1::Etc1PackParams& params, quint8 out[16]);
+
     void updataEntryHasAlpha(CtpkEntry* entry);
 
+    quint32 hashFilename(const QString& filename) const;
+
+    Layout computeLayout();
+    QByteArray readTextureSection() const;
+    QByteArray serialize(const Layout& layout, const QByteArray& oldTexData, const QList<quint32>& oldDataOffsets) const;
+    void commit(QByteArray data);
 
     void printInfo();
 

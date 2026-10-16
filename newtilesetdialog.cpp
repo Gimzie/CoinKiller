@@ -1,22 +1,39 @@
 #include "newtilesetdialog.h"
 #include "ui_newtilesetdialog.h"
 
-NewTilesetDialog::NewTilesetDialog(QWidget *parent, SettingsManager* settings) :
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
+
+NewTilesetDialog::NewTilesetDialog(QWidget *parent, SettingsManager* settings, QString initialName, int initialSlot, QString title) :
     QDialog(parent),
     ui(new Ui::NewTilesetDialog)
 {
+    Q_UNUSED(settings);
+
     ui->setupUi(this);
-    setWindowTitle(tr("Add Tileset..."));
+    setWindowTitle(title.isEmpty() ? tr("Add Tileset...") : title);
     ui->okButton->setText(tr("OK"));
     ui->cancelButton->setText(tr("Cancel"));
 
     ui->okButton->setEnabled(false);
 
+    ui->tilesetNameEdit->setValidator(new QRegularExpressionValidator(QRegularExpression("[^\\s]*"), ui->tilesetNameEdit));
+
     QStringList slotNames;
     slotNames << tr("Standard Suite") << tr("Stage Suite") << tr("Background Suite") << tr("Interactive Suite");
 
     ui->tilesetTypeBox->addItems(slotNames);
-    ui->tilesetTypeBox->setCurrentIndex(1);
+
+    if (initialSlot >= 0 && initialSlot < slotNames.size())
+        ui->tilesetTypeBox->setCurrentIndex(initialSlot);
+    else
+        ui->tilesetTypeBox->setCurrentIndex(1);
+
+    if (!initialName.isEmpty())
+    {
+        ui->tilesetNameEdit->setText(initialName);
+        ui->okButton->setEnabled(true);
+    }
 
     connect(ui->okButton, SIGNAL(clicked()), this, SLOT(accept()));
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
@@ -43,6 +60,11 @@ QString NewTilesetDialog::getName()
         default: prefix = "M_"; break;
     }
     return (prefix + ui->tilesetNameEdit->text());
+}
+
+QString NewTilesetDialog::getBaseName()
+{
+    return ui->tilesetNameEdit->text();
 }
 
 int NewTilesetDialog::getSlot()

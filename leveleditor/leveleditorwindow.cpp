@@ -189,6 +189,7 @@ LevelEditorWindow::LevelEditorWindow(LevelManager* lvlMgr, int initialArea) :
     ui->levelViewArea->setFrameShadow(QScrollArea::Plain);
 #endif
 
+    updatePending = false;
 }
 
 LevelEditorWindow::~LevelEditorWindow()
@@ -339,9 +340,22 @@ void LevelEditorWindow::on_actionZoom_In_triggered()
 {
     if (zoom < 4)
     {
+        float oldZoom = zoom;
         if (zoom < 1) zoom += 0.1f;
-        else zoom += 0.25;
+        else zoom += 0.25f;
+
+        QScrollBar* hBar = ui->levelViewArea->horizontalScrollBar();
+        QScrollBar* vBar = ui->levelViewArea->verticalScrollBar();
+        int vpW = ui->levelViewArea->viewport()->width();
+        int vpH = ui->levelViewArea->viewport()->height();
+
+        float centerX = (hBar->value() + vpW / 2.0f) / oldZoom;
+        float centerY = (vBar->value() + vpH / 2.0f) / oldZoom;
+
         levelView->setZoom(zoom);
+
+        hBar->setValue(static_cast<int>(qMax(0.0f, centerX * zoom - vpW / 2.0f)));
+        vBar->setValue(static_cast<int>(qMax(0.0f, centerY * zoom - vpH / 2.0f)));
 
         update();
     }
@@ -351,31 +365,87 @@ void LevelEditorWindow::on_actionZoom_Out_triggered()
 {
     if (zoom > 0.3)
     {
+        float oldZoom = zoom;
         if (zoom <= 1.5) zoom -= 0.1f;
-        else zoom -= 0.25;
+        else zoom -= 0.25f;
+
+        QScrollBar* hBar = ui->levelViewArea->horizontalScrollBar();
+        QScrollBar* vBar = ui->levelViewArea->verticalScrollBar();
+        int vpW = ui->levelViewArea->viewport()->width();
+        int vpH = ui->levelViewArea->viewport()->height();
+
+        float centerX = (hBar->value() + vpW / 2.0f) / oldZoom;
+        float centerY = (vBar->value() + vpH / 2.0f) / oldZoom;
+
         levelView->setZoom(zoom);
+
+        hBar->setValue(static_cast<int>(qMax(0.0f, centerX * zoom - vpW / 2.0f)));
+        vBar->setValue(static_cast<int>(qMax(0.0f, centerY * zoom - vpH / 2.0f)));
+
         update();
     }
 }
 
 void LevelEditorWindow::on_actionZoom_100_triggered()
 {
+    float oldZoom = zoom;
     zoom = 1;
+
+    QScrollBar* hBar = ui->levelViewArea->horizontalScrollBar();
+    QScrollBar* vBar = ui->levelViewArea->verticalScrollBar();
+    int vpW = ui->levelViewArea->viewport()->width();
+    int vpH = ui->levelViewArea->viewport()->height();
+
+    float centerX = (hBar->value() + vpW / 2.0f) / oldZoom;
+    float centerY = (vBar->value() + vpH / 2.0f) / oldZoom;
+
     levelView->setZoom(zoom);
+
+    hBar->setValue(static_cast<int>(qMax(0.0f, centerX * zoom - vpW / 2.0f)));
+    vBar->setValue(static_cast<int>(qMax(0.0f, centerY * zoom - vpH / 2.0f)));
+
     update();
 }
 
 void LevelEditorWindow::on_actionZoom_Maximum_triggered()
 {
+    float oldZoom = zoom;
     zoom = 4;
+
+    QScrollBar* hBar = ui->levelViewArea->horizontalScrollBar();
+    QScrollBar* vBar = ui->levelViewArea->verticalScrollBar();
+    int vpW = ui->levelViewArea->viewport()->width();
+    int vpH = ui->levelViewArea->viewport()->height();
+
+    float centerX = (hBar->value() + vpW / 2.0f) / oldZoom;
+    float centerY = (vBar->value() + vpH / 2.0f) / oldZoom;
+
     levelView->setZoom(zoom);
+
+    hBar->setValue(static_cast<int>(qMax(0.0f, centerX * zoom - vpW / 2.0f)));
+    vBar->setValue(static_cast<int>(qMax(0.0f, centerY * zoom - vpH / 2.0f)));
+
     update();
 }
 
 void LevelEditorWindow::on_actionZoom_Minimum_triggered()
 {
+    float oldZoom = zoom;
     zoom = 0.3f;
+
+    QScrollBar* hBar = ui->levelViewArea->horizontalScrollBar();
+    QScrollBar* vBar = ui->levelViewArea->verticalScrollBar();
+    int vpW = ui->levelViewArea->viewport()->width();
+    int vpH = ui->levelViewArea->viewport()->height();
+
+    float centerX = (hBar->value() + vpW / 2.0f) / oldZoom;
+    float centerY = (vBar->value() + vpH / 2.0f) / oldZoom;
+
     levelView->setZoom(zoom);
+
+    hBar->setValue(static_cast<int>(qMax(0.0f, centerX * zoom - vpW / 2.0f)));
+    vBar->setValue(static_cast<int>(qMax(0.0f, centerY * zoom - vpH / 2.0f)));
+
     update();
 }
 
@@ -579,14 +649,25 @@ void LevelEditorWindow::updateEditors()
         return;
     }
 
-    tilesetPalette->updateEditor();
-    areaEditor->updateEditor();
-    entranceEditor->updateEditor();
-    zoneEditor->updateEditor();
-    locationEditor->updateEditor();
-    pathEditor->updateEditor();
-    progPathEditor->updateEditor();
-    spriteEditor->spriteIdsPtr()->updateEditor();
+    if (!updatePending)
+    {
+        updatePending = true;
+        QTimer::singleShot([=]() -> int {
+            QScreen *scr = QGuiApplication::primaryScreen();
+            qreal hz = scr ? scr->refreshRate() : 60.0;
+            return static_cast<int>(1000.0 / hz);
+        }(), this, [this] {
+           tilesetPalette->updateEditor();
+           areaEditor->updateEditor();
+           entranceEditor->updateEditor();
+           zoneEditor->updateEditor();
+           locationEditor->updateEditor();
+           pathEditor->updateEditor();
+           progPathEditor->updateEditor();
+           //    spriteEditor->spriteIdsPtr()->updateEditor();
+           updatePending = false;
+       });
+    }
 }
 
 bool LevelEditorWindow::editorsLoaded()
@@ -747,6 +828,10 @@ void LevelEditorWindow::loadArea(int id, bool closeLevel, bool init)
     ui->levelViewArea->setWidget(levelView);
     levelView->setMinimumSize(4096*20, 4096*20);
     levelView->setMaximumSize(4096*20, 4096*20);
+
+    connect(levelView, &LevelView::zoomLevelChanged, this, [this](float newZoom) {
+        zoom = newZoom;
+    });
 
     levelView->editManagerPtr()->setLayerMask(LAYER_MASK::ALL, true);
     ui->actionToggleLayer0->setChecked(true);

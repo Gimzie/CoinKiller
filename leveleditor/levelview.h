@@ -22,6 +22,11 @@
 #include <QLayout>
 #include <QList>
 #include <QUndoStack>
+#include <QWheelEvent>
+#include <QApplication>
+#include <QGestureEvent>
+#include <QPinchGesture>
+#include <QNativeGestureEvent>
 
 #include "filesystem/filesystem.h"
 #include "level.h"
@@ -64,23 +69,32 @@ signals:
     void updateMinimap(QRect drawrect);
     void updateMinimapBounds();
     void updateCtrlabel(QString text);
+    void zoomLevelChanged(float zoom);
 
 public slots:
     void selectObj(Object* obj);
     void selectZoneContents(Zone* zone);
     void screenshot(QRect rect);
 
+    void requestUpdate();
+
 protected:
+    bool event(QEvent *) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *) Q_DECL_OVERRIDE;
     void moveEvent(QMoveEvent *) Q_DECL_OVERRIDE;
     void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
+    void wheelEvent(QWheelEvent *) Q_DECL_OVERRIDE;
 
 private:
 
     void paint(QPainter& painter, QRect rect, float zoomLvl, bool selections);
+    void handleWheelZoom(QWheelEvent* evt);
+    void handleWheelScroll(QWheelEvent* evt);
+    void handlePinchZoom(QPinchGesture* gesture);
+    void handleNativeZoom(QNativeGestureEvent* evt);
 
     Level* level;
 
@@ -107,6 +121,9 @@ private:
 
     QColor backgroundColor;
 
+    bool updatePending = false;
+
+    int scrollAccumulator;
 };
 
 #endif // LEVELVIEW_H
